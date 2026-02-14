@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: borderRadius.md, padding: spacing.md, alignItems: 'center',
   },
-  buttonText: { color: colors.background, fontSize: fontSize.md, fontWeight: '700' },
+  buttonText: { color: '#FFFFFF', fontSize: fontSize.md, fontWeight: '700' },
   divider: { flexDirection: 'row', alignItems: 'center', marginVertical: spacing.lg },
   dividerLine: { flex: 1, height: 1, backgroundColor: colors.border },
   dividerText: { color: colors.textTertiary, fontSize: fontSize.xs, marginHorizontal: spacing.md },

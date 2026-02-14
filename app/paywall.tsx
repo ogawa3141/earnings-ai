@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.xl, padding: spacing.xl, alignItems: 'center',
     marginBottom: spacing.lg,
   },
-  title: { color: colors.background, fontSize: fontSize.xxl, fontWeight: '800', marginTop: spacing.sm },
+  title: { color: '#FFFFFF', fontSize: fontSize.xxl, fontWeight: '800', marginTop: spacing.sm },
   subtitle: { color: 'rgba(8,12,20,0.7)', fontSize: fontSize.md, marginTop: spacing.xs },
 
   // Comparison
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.full, paddingHorizontal: spacing.md, paddingVertical: 4,
     alignSelf: 'flex-start', marginBottom: spacing.sm,
   },
-  badgeText: { color: colors.background, fontSize: fontSize.xs, fontWeight: '700' },
+  badgeText: { color: '#FFFFFF', fontSize: fontSize.xs, fontWeight: '700' },
   planName: { color: colors.text, fontSize: fontSize.xl, fontWeight: '800' },
   planPrice: { color: colors.accent, fontSize: fontSize.lg, fontWeight: '600', marginTop: spacing.xs },
   features: { marginTop: spacing.md, gap: spacing.sm },
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   selectButton: { borderRadius: borderRadius.md, padding: spacing.sm, alignItems: 'center' },
   selectButtonDefault: { borderWidth: 1, borderColor: colors.border },
   selectText: { color: colors.textSecondary, fontSize: fontSize.md, fontWeight: '600' },
-  selectTextRecommended: { color: colors.background, fontSize: fontSize.md, fontWeight: '700' },
+  selectTextRecommended: { color: '#FFFFFF', fontSize: fontSize.md, fontWeight: '700' },
 
   // Testimonials
   testimonialSection: { marginTop: spacing.md },

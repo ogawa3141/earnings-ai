@@ -88,7 +88,7 @@ export const AudioPlayer: React.FC<Props> = ({ ticker }) => {
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
           >
-            <Ionicons name={isPlaying ? 'pause' : 'play'} size={28} color={colors.background} />
+            <Ionicons name={isPlaying ? 'pause' : 'play'} size={28} color="#FFFFFF" />
           </LinearGradient>
         </TouchableOpacity>
 
