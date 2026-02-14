@@ -1,8 +1,8 @@
 export const colors = {
-  background: '#080C14',
-  backgroundSecondary: '#0B1120',
-  card: '#111827',
-  cardHover: '#162036',
+  background: '#131A2A',
+  backgroundSecondary: '#182035',
+  card: '#1C2640',
+  cardHover: '#233050',
   accent: '#6C9FFF',
   accentSecondary: '#A78BFA',
   positive: '#34D399',
@@ -12,17 +12,17 @@ export const colors = {
   text: '#F1F5F9',
   textSecondary: '#94A3B8',
   textTertiary: '#64748B',
-  border: '#1E293B',
-  borderLight: '#334155',
-  surface: '#1E293B',
-  surfaceHover: '#263548',
-  overlay: 'rgba(0, 0, 0, 0.6)',
+  border: '#2A3650',
+  borderLight: '#3D4F6A',
+  surface: '#243352',
+  surfaceHover: '#2E3F60',
+  overlay: 'rgba(0, 0, 0, 0.5)',
   // Gradient pairs
   gradientAccent: ['#6C9FFF', '#A78BFA'] as const,
   gradientPositive: ['#34D399', '#6EE7B7'] as const,
   gradientNegative: ['#F87171', '#FCA5A5'] as const,
-  gradientCard: ['rgba(17, 24, 39, 0.8)', 'rgba(30, 41, 59, 0.4)'] as const,
-  gradientBackground: ['#080C14', '#0B1120', '#111827'] as const,
+  gradientCard: ['rgba(28, 38, 64, 0.9)', 'rgba(36, 51, 82, 0.5)'] as const,
+  gradientBackground: ['#131A2A', '#182035', '#1C2640'] as const,
 };
 
 export const spacing = {
