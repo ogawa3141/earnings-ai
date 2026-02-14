@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { EarningsData } from '../types';
 import { EARNINGS_DETAILS } from '../constants/mockData';
-import { colors, spacing, fontSize } from '../constants/theme';
+import { colors, spacing, fontSize, borderRadius, shadows } from '../constants/theme';
 
 interface Props {
   data: EarningsData;
@@ -17,91 +18,123 @@ const clr = (n: number) => (n >= 0 ? colors.positive : colors.negative);
 export const EarningsCard: React.FC<Props> = ({ data }) => {
   const router = useRouter();
   const detail = EARNINGS_DETAILS[data.ticker];
-  const isPositive = data.surprise >= 0;
+  const isBeat = data.surprise >= 0;
+  const borderColor = isBeat ? colors.positive : colors.negative;
 
   return (
     <TouchableOpacity
-      style={styles.card}
+      style={[styles.card, { borderLeftColor: borderColor }]}
       onPress={() => router.push(`/earnings/${data.ticker}`)}
       activeOpacity={0.7}
     >
-      {/* Header: Ticker + Name + Price Change */}
+      <LinearGradient
+        colors={['rgba(17,24,39,0.95)', 'rgba(30,41,59,0.3)']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.gradientBg}
+      />
+
+      {/* Header: Logo + Ticker + Badge + Price */}
       <View style={styles.header}>
-        <View style={styles.tickerRow}>
-          <Text style={styles.ticker}>{data.ticker}</Text>
-          <Text style={styles.companyName} numberOfLines={1}>{data.companyName}</Text>
-          <Text style={[styles.priceChange, { color: clr(data.priceChange) }]}>
-            {data.priceChange >= 0 ? '▲' : '▼'}{Math.abs(data.priceChange).toFixed(1)}%
-          </Text>
+        <View style={[styles.logo, { backgroundColor: isBeat ? colors.positiveBackground : colors.negativeBackground }]}>
+          <Text style={[styles.logoText, { color: borderColor }]}>{data.ticker[0]}</Text>
         </View>
-        <TouchableOpacity style={styles.audioButton}>
-          <Ionicons name="headset" size={18} color={colors.accent} />
-        </TouchableOpacity>
+        <View style={styles.headerInfo}>
+          <View style={styles.tickerRow}>
+            <Text style={styles.ticker}>{data.ticker}</Text>
+            <View style={[styles.badge, { backgroundColor: isBeat ? colors.positiveBackground : colors.negativeBackground }]}>
+              <Ionicons
+                name={isBeat ? 'trending-up' : 'trending-down'}
+                size={12}
+                color={borderColor}
+              />
+              <Text style={[styles.badgeText, { color: borderColor }]}>
+                {isBeat ? 'BEAT' : 'MISS'}
+              </Text>
+            </View>
+          </View>
+          <Text style={styles.companyName} numberOfLines={1}>{data.companyName}</Text>
+        </View>
+        <View style={styles.priceArea}>
+          <View style={[styles.priceChip, { backgroundColor: data.priceChange >= 0 ? colors.positiveBackground : colors.negativeBackground }]}>
+            <Text style={[styles.priceChange, { color: clr(data.priceChange) }]}>
+              {data.priceChange >= 0 ? '▲' : '▼'} {Math.abs(data.priceChange).toFixed(1)}%
+            </Text>
+          </View>
+          <View style={styles.afterHours}>
+            <View style={[styles.afterHoursDot, { backgroundColor: colors.accent }]} />
+            <Text style={styles.afterHoursText}>AH</Text>
+          </View>
+        </View>
       </View>
 
-      {/* 業績サマリー行 */}
-      <View style={styles.row}>
-        <View style={styles.cell}>
-          <Text style={styles.label}>EPS</Text>
-          <Text style={styles.value}>
+      {/* Separator */}
+      <View style={styles.separator} />
+
+      {/* 2x2 Metrics Grid */}
+      <View style={styles.metricsGrid}>
+        <View style={styles.metricCell}>
+          <Text style={styles.metricLabel}>EPS</Text>
+          <Text style={styles.metricValue}>
             <Text style={styles.dim}>${fmt(data.epsEstimate)}→</Text>
             <Text style={{ color: clr(data.surprise) }}>${fmt(data.epsActual)}</Text>
           </Text>
-          <Text style={[styles.badge, { color: clr(data.surprise) }]}>{pct(data.surprise)}</Text>
+          <Text style={[styles.metricPct, { color: clr(data.surprise) }]}>{pct(data.surprise)}</Text>
         </View>
-        <View style={styles.cell}>
-          <Text style={styles.label}>売上高</Text>
+        <View style={styles.metricCell}>
+          <Text style={styles.metricLabel}>売上高</Text>
           {detail ? (
             <>
-              <Text style={styles.value}>
+              <Text style={styles.metricValue}>
                 <Text style={styles.dim}>{fmt(detail.revenue.estimate, 1)}→</Text>
                 <Text>{fmt(detail.revenue.actual, 1)}</Text>
               </Text>
-              <Text style={[styles.badge, { color: clr(detail.revenue.yoyGrowth) }]}>
+              <Text style={[styles.metricPct, { color: clr(detail.revenue.yoyGrowth) }]}>
                 YoY {pct(detail.revenue.yoyGrowth)}
               </Text>
             </>
           ) : (
-            <Text style={styles.value}>${fmt(data.revenueActual, 2)}B</Text>
+            <Text style={styles.metricValue}>${fmt(data.revenueActual, 2)}B</Text>
           )}
         </View>
+        {detail && (
+          <>
+            <View style={styles.metricCell}>
+              <Text style={styles.metricLabel}>次Q EPS予想</Text>
+              <Text style={styles.metricValue}>
+                ${fmt(detail.guidance.nextQ.eps)}
+              </Text>
+              <Text style={styles.dim}>est ${fmt(detail.guidance.nextQ.epsEstimate)}</Text>
+            </View>
+            <View style={styles.metricCell}>
+              <Text style={styles.metricLabel}>次Q 売上予想</Text>
+              <Text style={styles.metricValue}>
+                {fmt(detail.guidance.nextQ.revenue, 1)}{detail.guidance.nextQ.unit}
+              </Text>
+            </View>
+          </>
+        )}
       </View>
 
-      {/* ガイダンス行 */}
+      {/* Key Metrics Chips */}
       {detail && (
-        <View style={styles.row}>
-          <View style={styles.cell}>
-            <Text style={styles.label}>次Q EPS予想</Text>
-            <Text style={styles.guidanceValue}>
-              ${fmt(detail.guidance.nextQ.eps)}
-              <Text style={styles.dim}> (est ${fmt(detail.guidance.nextQ.epsEstimate)})</Text>
-            </Text>
+        <>
+          <View style={styles.separator} />
+          <View style={styles.chipsRow}>
+            <View style={styles.chip}>
+              <Text style={styles.chipLabel}>営業利益率</Text>
+              <Text style={styles.chipVal}>{detail.financials.nonGaapOperatingMargin}%</Text>
+            </View>
+            <View style={styles.chip}>
+              <Text style={styles.chipLabel}>FCF</Text>
+              <Text style={styles.chipVal}>{detail.financials.freeCashFlow}{detail.financials.freeCashFlowUnit}</Text>
+            </View>
+            <View style={styles.chip}>
+              <Text style={styles.chipLabel}>株主還元</Text>
+              <Text style={styles.chipVal}>{detail.shareholderReturns.total}{detail.shareholderReturns.unit}</Text>
+            </View>
           </View>
-          <View style={styles.cell}>
-            <Text style={styles.label}>次Q 売上予想</Text>
-            <Text style={styles.guidanceValue}>
-              {fmt(detail.guidance.nextQ.revenue, 1)}{detail.guidance.nextQ.unit}
-            </Text>
-          </View>
-        </View>
-      )}
-
-      {/* キーメトリクス */}
-      {detail && (
-        <View style={styles.metricsRow}>
-          <View style={styles.metricChip}>
-            <Text style={styles.metricLabel}>営業利益率</Text>
-            <Text style={styles.metricVal}>{detail.financials.nonGaapOperatingMargin}%</Text>
-          </View>
-          <View style={styles.metricChip}>
-            <Text style={styles.metricLabel}>FCF</Text>
-            <Text style={styles.metricVal}>{detail.financials.freeCashFlow}{detail.financials.freeCashFlowUnit}</Text>
-          </View>
-          <View style={styles.metricChip}>
-            <Text style={styles.metricLabel}>株主還元</Text>
-            <Text style={styles.metricVal}>{detail.shareholderReturns.total}{detail.shareholderReturns.unit}</Text>
-          </View>
-        </View>
+        </>
       )}
     </TouchableOpacity>
   );
@@ -109,92 +142,148 @@ export const EarningsCard: React.FC<Props> = ({ data }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.card,
-    borderRadius: 10,
-    padding: spacing.sm,
-    marginBottom: spacing.sm,
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
+    marginBottom: spacing.md,
     borderWidth: 1,
     borderColor: colors.border,
+    borderLeftWidth: 4,
+    overflow: 'hidden',
+    ...shadows.md,
+  },
+  gradientBg: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: borderRadius.lg,
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 6,
+    gap: spacing.sm,
+  },
+  logo: {
+    width: 40,
+    height: 40,
+    borderRadius: borderRadius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoText: {
+    fontSize: fontSize.lg,
+    fontWeight: '800',
+  },
+  headerInfo: {
+    flex: 1,
   },
   tickerRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    flex: 1,
+    gap: spacing.sm,
   },
   ticker: {
     color: colors.text,
-    fontSize: fontSize.lg,
-    fontWeight: '700',
+    fontSize: fontSize.xl,
+    fontWeight: '800',
+    letterSpacing: 0.5,
+  },
+  badge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 2,
+    borderRadius: borderRadius.full,
+  },
+  badgeText: {
+    fontSize: 10,
+    fontWeight: '800',
+    letterSpacing: 0.5,
   },
   companyName: {
     color: colors.textSecondary,
     fontSize: fontSize.xs,
-    flex: 1,
+    marginTop: 1,
+  },
+  priceArea: {
+    alignItems: 'flex-end',
+    gap: 4,
+  },
+  priceChip: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 3,
+    borderRadius: borderRadius.sm,
   },
   priceChange: {
     fontSize: fontSize.sm,
     fontWeight: '700',
   },
-  audioButton: {
-    padding: 4,
-    marginLeft: 4,
-  },
-  row: {
+  afterHours: {
     flexDirection: 'row',
-    marginBottom: 4,
+    alignItems: 'center',
+    gap: 3,
   },
-  cell: {
-    flex: 1,
+  afterHoursDot: {
+    width: 5,
+    height: 5,
+    borderRadius: 3,
   },
-  label: {
-    color: colors.textSecondary,
+  afterHoursText: {
+    color: colors.textTertiary,
+    fontSize: 9,
+    fontWeight: '600',
+  },
+  separator: {
+    height: 1,
+    backgroundColor: colors.border,
+    marginVertical: spacing.sm,
+    opacity: 0.5,
+  },
+  metricsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  metricCell: {
+    width: '50%',
+    paddingVertical: 4,
+    paddingRight: spacing.sm,
+  },
+  metricLabel: {
+    color: colors.textTertiary,
     fontSize: 10,
+    fontWeight: '500',
     marginBottom: 1,
   },
-  value: {
+  metricValue: {
     color: colors.text,
     fontSize: fontSize.sm,
     fontWeight: '600',
   },
-  dim: {
-    color: colors.textSecondary,
-  },
-  badge: {
+  metricPct: {
     fontSize: 10,
     fontWeight: '700',
   },
-  guidanceValue: {
-    color: colors.text,
-    fontSize: fontSize.sm,
-    fontWeight: '500',
+  dim: {
+    color: colors.textSecondary,
+    fontSize: fontSize.xs,
   },
-  metricsRow: {
+  chipsRow: {
     flexDirection: 'row',
-    gap: 4,
-    marginTop: 4,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-    paddingTop: 4,
+    gap: spacing.xs,
   },
-  metricChip: {
+  chip: {
     flex: 1,
     backgroundColor: colors.surface,
-    borderRadius: 6,
-    padding: 4,
+    borderRadius: borderRadius.sm,
+    padding: spacing.xs,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.border,
   },
-  metricLabel: {
-    color: colors.textSecondary,
+  chipLabel: {
+    color: colors.textTertiary,
     fontSize: 9,
+    fontWeight: '500',
   },
-  metricVal: {
+  chipVal: {
     color: colors.text,
     fontSize: 11,
     fontWeight: '700',
