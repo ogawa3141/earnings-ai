@@ -20,6 +20,7 @@ export default function SettingsScreen() {
     {
       title: '設定',
       items: [
+        { icon: 'business' as const, label: '証券会社連携', sub: 'CSVインポート・API連携', action: () => router.push('/brokerage') },
         { icon: 'notifications' as const, label: '通知設定', toggle: true, value: notifications, onToggle: setNotifications },
         { icon: 'volume-high' as const, label: '音声設定', sub: '速度: 1x' },
       ],

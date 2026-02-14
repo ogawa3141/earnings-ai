@@ -52,10 +52,10 @@ export default function TabLayout() {
       <Tabs.Screen
         name="watchlist"
         options={{
-          title: 'ウォッチ',
+          title: 'ポートフォリオ',
           tabBarIcon: ({ color, focused }) => (
             <View style={focused ? styles.activeIcon : undefined}>
-              <Ionicons name={focused ? 'eye' : 'eye-outline'} size={22} color={color} />
+              <Ionicons name={focused ? 'briefcase' : 'briefcase-outline'} size={22} color={color} />
             </View>
           ),
         }}

@@ -19,6 +19,8 @@ export default function RootLayout() {
         <Stack.Screen name="auth/login" options={{ title: 'ログイン' }} />
         <Stack.Screen name="auth/signup" options={{ title: 'サインアップ' }} />
         <Stack.Screen name="paywall" options={{ title: 'プラン選択', presentation: 'modal' }} />
+        <Stack.Screen name="brokerage" options={{ title: '証券会社連携', presentation: 'modal' }} />
+        <Stack.Screen name="csv-import" options={{ title: 'CSVインポート' }} />
       </Stack>
     </>
   );
