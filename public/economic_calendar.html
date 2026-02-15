@@ -8,54 +8,51 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  width: 1440px;
+  width: 1080px;
   font-family: 'Noto Sans JP', sans-serif;
   background: linear-gradient(180deg, #0a1628, #0f1f3a);
-  color: #e8edf2; padding: 40px 32px; line-height: 1.4;
+  color: #e8edf2; padding: 36px 28px; line-height: 1.5;
 }
-.header { text-align: center; margin-bottom: 24px; }
-.title { font-size: 44px; font-weight: 800; color: #fff; }
-.subtitle { font-size: 24px; color: #6b8ba4; margin-top: 4px; }
+.header { text-align: center; margin-bottom: 20px; }
+.title { font-size: 52px; font-weight: 800; color: #fff; }
+.subtitle { font-size: 28px; color: #6b8ba4; margin-top: 6px; }
 
 .top-card {
   background: linear-gradient(135deg, #2d1b69, #1b2d5e);
   border: 2px solid #5b3fbf; border-radius: 20px;
-  padding: 20px 28px; margin-bottom: 24px;
-  display: flex; gap: 24px; align-items: flex-start;
+  padding: 24px 28px; margin-bottom: 20px;
 }
-.top-card-title { font-size: 26px; font-weight: 700; color: #c4a6ff; margin-bottom: 8px; }
-.top-card .col { flex: 1; }
-.top-item { font-size: 22px; color: #d4c8f0; padding: 4px 0; }
+.top-card-title { font-size: 32px; font-weight: 700; color: #c4a6ff; margin-bottom: 10px; }
+.top-items { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+.top-item { font-size: 26px; color: #d4c8f0; padding: 4px 0; }
 .top-item::before { content: '▸ '; color: #a78bfa; }
 
-.days { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.day { background: rgba(255,255,255,0.03); border-radius: 16px; border: 2px solid rgba(255,255,255,0.06); overflow: hidden; }
-.day.span2 { grid-column: span 2; }
+.day { background: rgba(255,255,255,0.03); border-radius: 14px; border: 2px solid rgba(255,255,255,0.06); overflow: hidden; margin-bottom: 14px; }
 
 .day-title {
-  font-size: 26px; font-weight: 700; padding: 12px 20px;
+  font-size: 32px; font-weight: 700; padding: 14px 24px;
   background: linear-gradient(90deg, #1a3a5c, transparent);
   color: #5dade2; border-bottom: 2px solid rgba(255,255,255,0.06);
 }
 .day-title.holiday { color: #e74c3c; background: linear-gradient(90deg, #3a1a1a, transparent); }
 .day-title.fri { color: #e94560; background: linear-gradient(90deg, #3a1a2a, transparent); }
-.day-title .tag { font-size: 18px; font-weight: 400; background: rgba(255,255,255,0.15); padding: 2px 10px; border-radius: 6px; margin-left: 8px; }
+.day-title .tag { font-size: 22px; font-weight: 400; background: rgba(255,255,255,0.15); padding: 3px 12px; border-radius: 6px; margin-left: 10px; }
 
-.items { padding: 8px 16px 12px; }
-.item { display: flex; align-items: baseline; gap: 8px; padding: 5px 0; border-bottom: 2px solid rgba(255,255,255,0.03); }
-.item:last-child { border-bottom: none; }
-.item.hot { background: rgba(233,69,96,0.08); margin: 0 -16px; padding-left: 16px; padding-right: 16px; border-radius: 6px; }
-.t { width: 76px; flex-shrink: 0; font-size: 21px; color: #6b8ba4; font-weight: 600; padding-top: 2px; }
-.n { flex: 1; font-size: 23px; font-weight: 600; color: #e0e5ec; }
-.n .sub { display: block; font-size: 19px; font-weight: 400; color: #5a7a94; margin-top: -2px; }
-.s { flex-shrink: 0; font-size: 20px; }
+.items { padding: 6px 20px 10px; }
+.row { display: flex; align-items: baseline; gap: 10px; padding: 8px 4px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.row:last-child { border-bottom: none; }
+.row.hot { background: rgba(233,69,96,0.1); margin: 0 -20px; padding-left: 24px; padding-right: 24px; border-radius: 8px; }
+.time { width: 90px; flex-shrink: 0; font-size: 28px; color: #6b8ba4; font-weight: 600; }
+.name { flex: 1; font-size: 30px; font-weight: 600; color: #e0e5ec; }
+.name .sub { display: block; font-size: 24px; font-weight: 400; color: #5a7a94; }
+.stars { flex-shrink: 0; font-size: 26px; }
 .s3 { color: #f39c12; }
-.s2 { color: #7a8a9a; }
-.badge { font-size: 16px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 6px; vertical-align: middle; }
+.s2 { color: #607080; }
+.badge { font-size: 20px; font-weight: 700; padding: 3px 10px; border-radius: 5px; margin-left: 8px; vertical-align: middle; }
 .fomc { background: #e94560; color: #fff; }
 .fed { background: #7b2cbf; color: #fff; }
 
-.footer { text-align: center; font-size: 18px; color: #3a4c5e; margin-top: 20px; }
+.footer { text-align: center; font-size: 22px; color: #3a4c5e; margin-top: 16px; }
 </style>
 </head>
 <body>
@@ -66,74 +63,65 @@ body {
 </div>
 
 <div class="top-card">
-  <div class="col">
-    <div class="top-card-title">🔥 注目イベント</div>
+  <div class="top-card-title">🔥 注目イベント</div>
+  <div class="top-items">
     <div class="top-item">水 04:00 FOMC議事録公開</div>
-    <div class="top-item">金 22:30 GDP速報 & PCE</div>
-  </div>
-  <div class="col">
-    <div class="top-card-title" style="visibility:hidden">.</div>
     <div class="top-item">金 08:30 🇯🇵 全国CPI</div>
+    <div class="top-item">金 22:30 GDP速報 & PCE</div>
     <div class="top-item">月 🇺🇸 プレジデンツデー休場</div>
   </div>
 </div>
 
-<div class="days">
-
 <div class="day">
   <div class="day-title holiday">月 2/16 <span class="tag">🇺🇸休場</span></div>
   <div class="items">
-    <div class="item"><div class="t">—</div><div class="n">🇺🇸 プレジデンツデー</div><div class="s s3">★★★</div></div>
-    <div class="item"><div class="t">08:50</div><div class="n">🇯🇵 実質GDP Q4速報<span class="sub">前回 -0.6% / 予想 +0.5%</span></div><div class="s s3">★★★</div></div>
-    <div class="item"><div class="t">13:30</div><div class="n">🇯🇵 鉱工業生産 確報<span class="sub">前回 -2.7%</span></div><div class="s s2">★★</div></div>
-    <div class="item"><div class="t">02:25</div><div class="n">🇺🇸 Fed ボウマン<span class="badge fed">FED</span></div><div class="s s2">★★</div></div>
+    <div class="row"><div class="time">—</div><div class="name">🇺🇸 プレジデンツデー（休場）</div><div class="stars s3">★★★</div></div>
+    <div class="row"><div class="time">08:50</div><div class="name">🇯🇵 実質GDP Q4 速報<span class="sub">前回 -0.6% / 予想 +0.5%</span></div><div class="stars s3">★★★</div></div>
+    <div class="row"><div class="time">13:30</div><div class="name">🇯🇵 鉱工業生産 確報<span class="sub">前回 -2.7%</span></div><div class="stars s2">★★</div></div>
+    <div class="row"><div class="time">02:25</div><div class="name">🇺🇸 Fed ボウマン理事 講演<span class="badge fed">FED</span></div><div class="stars s2">★★</div></div>
   </div>
 </div>
 
 <div class="day">
   <div class="day-title">火 2/17</div>
   <div class="items">
-    <div class="item"><div class="t">22:30</div><div class="n">🇺🇸 NY連銀製造業<span class="sub">前回 7.7 / 予想 10.0</span></div><div class="s s3">★★★</div></div>
-    <div class="item"><div class="t">00:00</div><div class="n">🇺🇸 NAHB住宅市場<span class="sub">前回 37 / 予想 38</span></div><div class="s s2">★★</div></div>
-    <div class="item"><div class="t">20:45</div><div class="n">🇺🇸 Fed バー理事<span class="badge fed">FED</span></div><div class="s s2">★★</div></div>
+    <div class="row"><div class="time">22:30</div><div class="name">🇺🇸 NY連銀製造業景気指数<span class="sub">前回 7.7 / 予想 10.0</span></div><div class="stars s3">★★★</div></div>
+    <div class="row"><div class="time">00:00</div><div class="name">🇺🇸 NAHB住宅市場指数<span class="sub">前回 37 / 予想 38</span></div><div class="stars s2">★★</div></div>
+    <div class="row"><div class="time">20:45</div><div class="name">🇺🇸 Fed バー理事 講演<span class="badge fed">FED</span></div><div class="stars s2">★★</div></div>
   </div>
 </div>
 
-<div class="day span2">
+<div class="day">
   <div class="day-title">水 2/18 <span class="tag">指標ラッシュ</span></div>
-  <div class="items" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px;">
-    <div class="item hot"><div class="t">04:00</div><div class="n">🇺🇸 FOMC議事録<span class="badge fomc">FOMC</span><span class="sub">利下げ停止の背景に注目</span></div><div class="s s3">★★★</div></div>
-    <div class="item"><div class="t">08:50</div><div class="n">🇯🇵 機械受注<span class="sub">前回 -11.0% / 予想 +4.5%</span></div><div class="s s3">★★★</div></div>
-    <div class="item"><div class="t">22:30</div><div class="n">🇺🇸 住宅着工件数<span class="sub">前回 1.25M / 予想 1.30M</span></div><div class="s s3">★★★</div></div>
-    <div class="item"><div class="t">23:15</div><div class="n">🇺🇸 鉱工業生産<span class="sub">前回 +0.4%</span></div><div class="s s2">★★</div></div>
-    <div class="item"><div class="t">22:30</div><div class="n">🇺🇸 耐久財受注<span class="sub">前回 +5.3% / 予想 -2.3%</span></div><div class="s s3">★★★</div></div>
-    <div class="item"><div class="t">03:00</div><div class="n">🇺🇸 20年債入札<span class="sub">前回 4.846%</span></div><div class="s s2">★★</div></div>
+  <div class="items">
+    <div class="row hot"><div class="time">04:00</div><div class="name">🇺🇸 FOMC議事録公開<span class="badge fomc">FOMC</span><span class="sub">1月会合分 / 利下げ停止の背景に注目</span></div><div class="stars s3">★★★</div></div>
+    <div class="row"><div class="time">22:30</div><div class="name">🇺🇸 住宅着工件数<span class="sub">前回 1.25M / 予想 1.30M</span></div><div class="stars s3">★★★</div></div>
+    <div class="row"><div class="time">22:30</div><div class="name">🇺🇸 耐久財受注<span class="sub">前回 +5.3% / 予想 -2.3%</span></div><div class="stars s3">★★★</div></div>
+    <div class="row"><div class="time">08:50</div><div class="name">🇯🇵 機械受注<span class="sub">前回 -11.0% / 予想 +4.5%</span></div><div class="stars s3">★★★</div></div>
+    <div class="row"><div class="time">03:00</div><div class="name">🇺🇸 20年債入札<span class="sub">前回 4.846%</span></div><div class="stars s2">★★</div></div>
   </div>
 </div>
 
 <div class="day">
   <div class="day-title">木 2/19</div>
   <div class="items">
-    <div class="item"><div class="t">22:30</div><div class="n">🇺🇸 失業保険申請<span class="sub">前回 227K / 予想 220K</span></div><div class="s s3">★★★</div></div>
-    <div class="item"><div class="t">22:30</div><div class="n">🇺🇸 フィラ連銀製造業<span class="sub">前回 12.6</span></div><div class="s s3">★★★</div></div>
-    <div class="item"><div class="t">00:00</div><div class="n">🇺🇸 中古住宅保留<span class="sub">前回 -9.3%</span></div><div class="s s2">★★</div></div>
-    <div class="item"><div class="t">23:00</div><div class="n">🇺🇸 Fed カシュカリ<span class="badge fed">FED</span></div><div class="s s2">★★</div></div>
-    <div class="item"><div class="t">03:00</div><div class="n">🇺🇸 30年TIPS入札</div><div class="s s2">★★</div></div>
+    <div class="row"><div class="time">22:30</div><div class="name">🇺🇸 新規失業保険申請件数<span class="sub">前回 227K / 予想 220K</span></div><div class="stars s3">★★★</div></div>
+    <div class="row"><div class="time">22:30</div><div class="name">🇺🇸 フィラデルフィア連銀製造業<span class="sub">前回 12.6</span></div><div class="stars s3">★★★</div></div>
+    <div class="row"><div class="time">00:00</div><div class="name">🇺🇸 中古住宅販売保留指数<span class="sub">前回 -9.3% / 予想 +2.6%</span></div><div class="stars s2">★★</div></div>
+    <div class="row"><div class="time">23:00</div><div class="name">🇺🇸 Fed カシュカリ総裁 講演<span class="badge fed">FED</span></div><div class="stars s2">★★</div></div>
   </div>
 </div>
 
 <div class="day">
-  <div class="day-title fri">金 2/20 <span class="tag">🔥超重要</span></div>
+  <div class="day-title fri">金 2/20 <span class="tag">🔥超重要デー</span></div>
   <div class="items">
-    <div class="item hot"><div class="t">08:30</div><div class="n">🇯🇵 全国CPI<span class="sub">コア 前回2.4% / 予想2.0%</span></div><div class="s s3">★★★</div></div>
-    <div class="item hot"><div class="t">22:30</div><div class="n">🇺🇸🔥 GDP速報 Q4<span class="sub">前回+4.4% / 予想+2.5%</span></div><div class="s s3">★★★</div></div>
-    <div class="item hot"><div class="t">22:30</div><div class="n">🇺🇸🔥 PCEデフレータ<span class="sub">コア 前回2.8% / 予想2.9%</span></div><div class="s s3">★★★</div></div>
-    <div class="item"><div class="t">22:30</div><div class="n">🇺🇸 個人所得・支出</div><div class="s s2">★★</div></div>
-    <div class="item"><div class="t">23:45</div><div class="n">🇺🇸 PMI速報 2月</div><div class="s s2">★★</div></div>
-    <div class="item"><div class="t">00:00</div><div class="n">🇺🇸 ミシガン大確報<span class="sub">速報 57.3</span></div><div class="s s3">★★★</div></div>
+    <div class="row hot"><div class="time">08:30</div><div class="name">🇯🇵 全国CPI（1月）<span class="sub">コア 前回 2.4% / 予想 2.0%</span></div><div class="stars s3">★★★</div></div>
+    <div class="row hot"><div class="time">22:30</div><div class="name">🇺🇸🔥 GDP速報 Q4<span class="sub">前回 +4.4% / 予想 +2.5%（前期比年率）</span></div><div class="stars s3">★★★</div></div>
+    <div class="row hot"><div class="time">22:30</div><div class="name">🇺🇸🔥 PCEデフレータ / コアPCE<span class="sub">コア 前回 2.8% / 予想 2.9%</span></div><div class="stars s3">★★★</div></div>
+    <div class="row"><div class="time">22:30</div><div class="name">🇺🇸 個人所得・消費支出</div><div class="stars s2">★★</div></div>
+    <div class="row"><div class="time">23:45</div><div class="name">🇺🇸 PMI速報（製造業/サービス業）</div><div class="stars s2">★★</div></div>
+    <div class="row"><div class="time">00:00</div><div class="name">🇺🇸 ミシガン大消費者信頼感 確報<span class="sub">速報 57.3 / 予想 57.1</span></div><div class="stars s3">★★★</div></div>
   </div>
-</div>
-
 </div>
 
 <div class="footer">
